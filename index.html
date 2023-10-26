@@ -4,6 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Odin Calculator</title>
+    <script>
+      console.warn = () => {};
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="styles.css" />
   </head>
@@ -15,11 +18,7 @@
             <div class="previousNumber"></div>
             <div class="currentNumber">0</div>
           </div>
-          <button
-            class="clear flex w-12 h-12 justify-center items-center m-1 font-bold py-2 px-2 border hover:border-transparent rounded text-white border-2 text-2xl hover:bg-red-500 border-red-500"
-          >
-            AC
-          </button>
+          <button class="clear">AC</button>
         </div>
         <div class="flex mb-1">
           <button class="number">7</button>
