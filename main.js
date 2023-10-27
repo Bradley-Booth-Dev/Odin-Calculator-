@@ -45,10 +45,3 @@ function handleOperator(op) {
   currentNum = "";
   currentDisplayNumber.textContent = "";
 }
-
-function operatorCheck(text) {
-  operator = text;
-  previousDisplayNumber.textContent = previousNum + " " + operator;
-  currentDisplayNumber.textContent = "0";
-  currentNum = "";
-}
