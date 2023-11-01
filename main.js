@@ -6,10 +6,19 @@ const currentDisplayNumber = document.querySelector(".currentNumber");
 const previousDisplayNumber = document.querySelector(".previousNumber");
 
 const equal = document.querySelector(".equal");
+equal.addEventListener("click", () => {
+  if (currentNum != "" && previousNum != "") {
+    calculate();
+  }
+});
 
 const decimal = document.querySelector(".decimal");
+decimal.addEventListener("click", () => {
+  addDecimal();
+});
 
 const clear = document.querySelector(".clear");
+clear.addEventListener("click", clearCalculator);
 
 const numberButtons = document.querySelectorAll(".number");
 
@@ -39,9 +48,77 @@ operators.forEach((btn) => {
 });
 
 function handleOperator(op) {
-  operator = op;
-  previousNum = currentNum;
+  if (previousNum === "") {
+    previousNum = currentNum;
+    operatorCheck(op);
+  } else if (currentNum === "") {
+    operatorCheck(op);
+  } else {
+    calculate();
+    operator = op;
+    currentDisplayNumber.textContent = "0";
+    previousDisplayNumber.textContent = previousNum + " " + operator;
+  }
+}
+
+function operatorCheck(text) {
+  operator = text;
   previousDisplayNumber.textContent = previousNum + " " + operator;
+  currentDisplayNumber.textContent = "0";
   currentNum = "";
-  currentDisplayNumber.textContent = "";
+}
+
+function calculate() {
+  previousNum = Number(previousNum);
+  currentNum = Number(currentNum);
+
+  if (operator === "+") {
+    previousNum = previousNum + currentNum;
+  }
+  if (operator === "-") {
+    previousNum = previousNum - currentNum;
+  }
+  if (operator === "x") {
+    previousNum = previousNum * currentNum;
+  }
+  if (operator === "/") {
+    if (currentNum <= 0) {
+      previousNum = "Error";
+      displayResults();
+      return;
+    }
+    previousNum = previousNum / currentNum;
+  }
+  previousNum = previousNum.toString();
+  displayResults();
+}
+
+function roundNumber() {
+  return Math.round(num * 100000) / 1000000;
+}
+
+function displayResults() {
+  if (previousNum.length <= 11) {
+    currentDisplayNumber.textContent = previousNum;
+  } else {
+    currentDisplayNumber.textContent = previousNum.slice(0, 11) + "...";
+  }
+  previousDisplayNumber.textContent = "";
+  operator = "";
+  currentNum = "";
+}
+
+function clearCalculator() {
+  currentNum = "";
+  previousNum = "";
+  operator = "";
+  currentDisplayNumber.textContent = "0";
+  previousDisplayNumber.textContent = "";
+}
+
+function addDecimal() {
+  if (!currentNum.includes(".")) {
+    currentNum += ".";
+    currentDisplayNumber.textContent = currentNum;
+  }
 }
